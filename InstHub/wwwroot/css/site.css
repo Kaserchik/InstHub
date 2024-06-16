@@ -20,3 +20,42 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+.files_div {
+    height: auto;
+    width: auto;
+    background-color: red;
+}
+
+.bg_file_add {
+    width: 200px;
+    height: 200px;
+    background-color: rgb(217,217,217);
+    margin-right: 10px;
+    margin-bottom: 10px;
+    border-radius: 35px;
+    display: flex;
+    justify-content: center; 
+    align-items: center;
+}
+
+.bg_file {
+    width: 200px;
+    height: 200px;
+    background-color: rgb(217,217,217);
+    margin-right: 10px;
+    margin-bottom: 10px;
+    border-radius: 35px;
+}
+
+.el_line {
+    display: flex;
+}
+
+.a_bt_add {
+    color: black;
+}
+
+.a_bt_add:hover {
+    color: black;
+}

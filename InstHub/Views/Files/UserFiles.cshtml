@@ -9,7 +9,38 @@
 <div class="">
     <h3>Файлы пользователя @User.Identity?.Name!</h3>
 
-    <div class="">
-
+    <div class="files_div">
+        <div class="el_line">
+            @* <form id="checkCreateFolderForm" method="post" asp-controller="Files" asp-action="CheckAndCreateUserFolder">
+                @Html.AntiForgeryToken()
+                <a href="#" class="a_bt_add" onclick="document.getElementById('checkCreateFolderForm').submit(); return false;">
+                    <div class="bg_file_add">
+                        <img src="/images/files/add_file.png" width="150px" height="150px" />
+                    </div>
+                    <p>Добавить файл</p>
+                </a>
+            </form> *@
+            <form id="uploadFileForm" enctype="multipart/form-data" method="post" asp-controller="Files" asp-action="CheckAndCreateUserFolder">
+                @Html.AntiForgeryToken()
+                <input type="file" name="file" id="fileInput" style="display:none;" />
+                <a href="#" class="a_bt_add" onclick="document.getElementById('fileInput').click(); return false;">
+                    <div class="bg_file_add">
+                        <img src="/images/files/add_file.png" width="150px" height="150px" />
+                    </div>
+                    <p>Добавить файл</p>
+                </a>
+                <button type="submit" style="display:none;" id="submitBtn"></button>
+            </form>
+        </div>
     </div>
 </div>
+
+@section Scripts {
+    <script>
+        document.getElementById('fileInput').addEventListener('change', function () {
+            if (this.files && this.files.length > 0) {
+                document.getElementById('submitBtn').click();
+            }
+        });
+    </script>
+}
