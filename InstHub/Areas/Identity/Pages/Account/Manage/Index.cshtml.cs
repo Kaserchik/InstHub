@@ -76,7 +76,9 @@ namespace InstHub.Areas.Identity.Pages.Account.Manage
 
             Input = new InputModel
             {
-                PhoneNumber = phoneNumber
+                PhoneNumber = phoneNumber,
+                FirstName = user.FirstName,
+                SecondName = user.SecondName
             };
         }
 
@@ -92,13 +94,15 @@ namespace InstHub.Areas.Identity.Pages.Account.Manage
             return Page();
         }
 
-        public async Task<IActionResult> OnPostAsync()
+        public async Task<IActionResult> OnPostAsync(InputModel Input)
         {
             var user = await _userManager.GetUserAsync(User);
             if (user == null)
             {
                 return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
             }
+            user.FirstName = Convert.ToString(Input.FirstName);
+            user.SecondName = Convert.ToString(Input.SecondName);
 
             if (!ModelState.IsValid)
             {
