@@ -8,20 +8,30 @@ namespace InstHub.Controllers
     {
         private readonly UserManager<AppIdentityUser> _userManager;
         private readonly IWebHostEnvironment _env;
+        private readonly ILogger<FilesController> _logger;
 
-        public FilesController(UserManager<AppIdentityUser> userManager, IWebHostEnvironment env)
+        public class UserFilesViewModel
+        {
+            public string UserName { get; set; }
+            public List<string> Files { get; set; }
+        }
+
+        public FilesController(UserManager<AppIdentityUser> userManager, IWebHostEnvironment env, ILogger<FilesController> logger)
         {
             _userManager = userManager;
             _env = env;
+            _logger = logger;
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> CheckAndCreateUserFolder(IFormFile file)
         {
+
             var user = await _userManager.GetUserAsync(User);
             if (user == null)
             {
+                _logger.LogError("Unable to load user with ID '{UserId}'", _userManager.GetUserId(User));
                 return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
             }
 
@@ -32,32 +42,63 @@ namespace InstHub.Controllers
             if (!Directory.Exists(userFolderPath))
             {
                 Directory.CreateDirectory(userFolderPath);
+                _logger.LogInformation("Created directory for user {UserId} at {Path}", user.Id, userFolderPath);
             }
 
             if (file != null && file.Length > 0)
             {
                 var filePath = Path.Combine(userFolderPath, file.FileName);
 
-                using (var stream = new FileStream(filePath, FileMode.Create))
-                {
-                    await file.CopyToAsync(stream);
-                }
+                _logger.LogInformation("Uploading file {FileName} for user {UserId}", file.FileName, user.Id);
 
-                TempData["StatusMessage"] = "Folder checked/created and file uploaded successfully";
+                try
+                {
+                    using (var stream = new FileStream(filePath, FileMode.Create))
+                    {
+                        await file.CopyToAsync(stream);
+                    }
+
+                    TempData["StatusMessage"] = "File uploaded successfully";
+                    _logger.LogInformation("File {FileName} uploaded successfully for user {UserId}", file.FileName, user.Id);
+                }
+                catch (Exception ex)
+                {
+                    _logger.LogError(ex, "Error uploading file {FileName} for user {UserId}", file.FileName, user.Id);
+                    TempData["StatusMessage"] = "Error uploading file.";
+                }
             }
             else
             {
-                TempData["StatusMessage"] = "Folder checked/created but no file selected for upload";
+                TempData["StatusMessage"] = "No file selected for upload";
+                _logger.LogWarning("No file selected for upload by user {UserId}", user.Id);
             }
-
-            TempData["StatusMessage"] = "Folder checked/created successfully";
 
             return RedirectToAction("UserFiles");
         }
 
-        public IActionResult UserFiles()
+        public async Task<IActionResult> UserFiles()
         {
-            return View();
+            var user = await _userManager.GetUserAsync(User);
+            if (user == null)
+            {
+                return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
+            }
+
+            var userFolderPath = Path.Combine(_env.WebRootPath, "usersfiles", user.Id);
+
+            var files = new List<string>();
+            if (Directory.Exists(userFolderPath))
+            {
+                files = Directory.GetFiles(userFolderPath).Select(Path.GetFileName).ToList();
+            }
+
+            var model = new UserFilesViewModel
+            {
+                UserName = user.UserName,
+                Files = files
+            };
+
+            return View(model);
         }
     }
 }

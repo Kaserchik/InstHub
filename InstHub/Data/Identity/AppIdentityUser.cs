@@ -6,5 +6,11 @@ namespace InstHub.Data.Identity
     {
         public string FirstName { get; set; }
         public string SecondName { get; set; }
+
+        public AppIdentityUser()
+        {
+            FirstName = "";
+            SecondName = "";
+        }
     }
 }
