@@ -79,16 +79,16 @@
 
                 <a href="@Url.Content(@openPath)" class="bg_file">
                     <div class="bg_file_add">
-                        <img src="@iconPath" width="150px" height="150px" />
+                        <img src="@iconPath" class="file_ico_class"/>
                     </div>
                     <p>@file.FileName</p>
                 </a>
                 <div class="file_actions">
                     <a asp-controller="Files" asp-action="Download" asp-route-fileName="@file.FileName" class="file_action" title="Загрузить">
-                        <img src="/images/files/download_icon.png" width="30px" height="30px" />
+                        <img src="/images/files/download_icon.png" class="dw_dl_file_ico_class" />
                     </a>
                     <a asp-controller="Files" asp-action="Delete" asp-route-fileName="@file.FileName" class="file_action" title="Удалить">
-                        <img src="/images/files/delete_icon.png" width="30px" height="30px" />
+                        <img src="/images/files/delete_icon.png" class="dw_dl_file_ico_class"/>
                     </a>
                 </div>
 
@@ -105,7 +105,7 @@
                 <input type="file" name="file" id="fileInput" style="display:none;" />
                 <a href="#" class="a_bt_add" onclick="document.getElementById('fileInput').click(); return false;">
                     <div class="bg_file_add">
-                        <img src="/images/files/add_file.png" width="150px" height="150px" />
+                        <img src="/images/files/add_file.png" class="file_ico_class"/>
                     </div>
                     <p>Добавить файл</p>
                 </a>
