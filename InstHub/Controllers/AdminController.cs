@@ -3,10 +3,10 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace InstHub.Controllers
 {
-    //[Authorize(Roles = "User")]
-    public class ConferencesController : Controller
+    [Authorize(Roles = "Admin")]
+    public class AdminController : Controller
     {
-        public IActionResult UserConferences()
+        public IActionResult Index()
         {
             return View();
         }

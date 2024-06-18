@@ -1,0 +1,48 @@
+﻿@{
+    ViewData["Title"] = "Создание группы";
+}
+
+<div class="groups_div">
+    <div class="groups_elements">
+        <div class="leftpanel">
+            <img style="margin-bottom:20px; margin-left:45px" id="preview" src="#" width="150px" height="150px" />
+            <input style="margin-bottom:20px" type="file" id="fileInput" accept="image/*" />
+            <button style="border-radius:20px" id="confirmButton">Подтвердить</button>
+        </div>
+        <div class="rightpanel">
+            <div class="groupname">
+                <p>
+                    Наименование группы
+                </p>
+                <input style="border-radius:20px; margin-left:20px" type="text" class="" name="name" value="" />
+            </div>
+            <div class="groupname">
+                <p>
+                    Список участников
+                </p>
+                <input style="border-radius:20px; margin-left:20px" type="text" class="" name="name" value="" />
+            </div>
+        </div>
+    </div>
+    <button style="border-radius:20px; margin-top:20px">Создать группу</button>
+</div>
+
+@section Scripts {
+    <script>
+        document.getElementById('confirmButton').addEventListener('click', function () {
+            const fileInput = document.getElementById('fileInput');
+            const previewImg = document.getElementById('preview');
+
+            if (fileInput.files && fileInput.files[0]) {
+                const file = fileInput.files[0];
+                const reader = new FileReader();
+
+                reader.onload = function (e) {
+                    previewImg.src = e.target.result;
+                }
+
+                reader.readAsDataURL(file);
+            }
+        });
+    </script>
+}

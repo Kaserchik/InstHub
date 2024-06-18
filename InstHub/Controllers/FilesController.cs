@@ -1,9 +1,11 @@
 ﻿using InstHub.Data.Identity;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace InstHub.Controllers
 {
+    //[Authorize(Roles = "User")]
     public class FilesController : Controller
     {
         private readonly UserManager<AppIdentityUser> _userManager;
@@ -225,7 +227,6 @@ namespace InstHub.Controllers
             {
                 TempData["StatusMessage"] = "Файл не найден";
             }
-
             return RedirectToAction("UserFiles");
         }
 

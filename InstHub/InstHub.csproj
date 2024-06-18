@@ -30,6 +30,7 @@
 
   <ItemGroup>
     <Folder Include="wwwroot\usersfiles\" />
+    <Folder Include="wwwroot\groups\" />
   </ItemGroup>
 
 </Project>

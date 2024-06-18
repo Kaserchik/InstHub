@@ -36,6 +36,12 @@ body {
     background-color: red;
 }
 
+.groups_div {
+    height: auto;
+    width: auto;
+    background-color: red;
+}
+
 .bg_file_add {
     width: 200px;
     height: 200px;
@@ -83,6 +89,31 @@ body {
 
 .file_action {
     margin-bottom: 20px; 
+}
+
+.leftpanel {
+    display: flex;
+    flex-direction: column;
+}
+
+.groups_div {
+    display: flex;
+    flex-direction: column;
+}
+
+.groupname {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 20px;
+}
+
+.rightpanel {
+    display: flex;
+    flex-direction: column;
+}
+.groups_elements {
+    display: flex;
+    flex-direction: row;
 }
 
 @media (max-width: 1399px) {
