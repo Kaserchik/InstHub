@@ -10,10 +10,16 @@ namespace InstHub.Controllers
         private readonly IWebHostEnvironment _env;
         private readonly ILogger<FilesController> _logger;
 
+        public class FileViewModel
+        {
+            public string FileName { get; set; }
+            public string Extension { get; set; }
+        }
+
         public class UserFilesViewModel
         {
             public string UserName { get; set; }
-            public List<string> Files { get; set; }
+            public List<FileViewModel> Files { get; set; }
         }
 
         public FilesController(UserManager<AppIdentityUser> userManager, IWebHostEnvironment env, ILogger<FilesController> logger)
@@ -85,17 +91,21 @@ namespace InstHub.Controllers
             }
 
             var userFolderPath = Path.Combine(_env.WebRootPath, "usersfiles", user.Id);
-
-            var files = new List<string>();
-            if (Directory.Exists(userFolderPath))
+            var files = Directory.Exists(userFolderPath) ? Directory.GetFiles(userFolderPath) : new string[0];
+            var fileViewModels = new List<FileViewModel>();
+            foreach (var file in files)
             {
-                files = Directory.GetFiles(userFolderPath).Select(Path.GetFileName).ToList();
+                fileViewModels.Add(new FileViewModel
+                {
+                    FileName = Path.GetFileName(file),
+                    Extension = Path.GetExtension(file).ToLower()
+                });
             }
 
             var model = new UserFilesViewModel
             {
                 UserName = user.UserName,
-                Files = files
+                Files = fileViewModels
             };
 
             return View(model);

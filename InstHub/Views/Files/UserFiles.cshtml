@@ -3,28 +3,95 @@
 @model InstHub.Controllers.FilesController.UserFilesViewModel
 @inject SignInManager<AppIdentityUser> SignInManager
 @inject UserManager<AppIdentityUser> UserManager
+
 @{
     ViewData["Title"] = "Файлы";
 }
-
-
 
 <div class="">
     <h3>Файлы пользователя @User.Identity?.Name!</h3>
 
     <div class="files_div">
+        @{
+            int fileCount = 0;
+            bool isRowOpen = false;
+        }
         <div class="el_line">
             @foreach (var file in Model.Files)
             {
-                <div class="el_line">
-                    <a href="@Url.Content($"~/usersfiles/{User.Identity.Name}/{file}")" class="bg_file">
-                        <div class="bg_file_add">
-                            <img src="/images/files/file_icon.png" width="150px" height="150px" />
-                        </div>
-                        <p>@file</p>
-                    </a>
-                </div>
+                string iconPath;
+                string openPath;
+                switch (file.Extension)
+                {
+                    case ".pdf":
+                        iconPath = "/images/files/pdf_icon.png";
+                        openPath = "";
+                        break;
+                    case ".vsdx":
+                        iconPath = "/images/files/vsdx_icon.png";
+                        openPath = "";
+                        break;
+                    case ".pptx":
+                        iconPath = "/images/files/pptx_icon.png";
+                        openPath = "";
+                        break;
+                    case ".wav":
+                    case ".midi":
+                    case ".mp3":
+                        iconPath = "/images/files/mp3.png";
+                        openPath = "";
+                        break;
+                    case ".rar":
+                    case ".zip":
+                    case ".7z":
+                        iconPath = "/images/files/zip.png";
+                        openPath = "";
+                        break;
+                    case ".avi":
+                    case ".mp4":
+                    case ".mpg":
+                        iconPath = "/images/files/mp4.png";
+                        openPath = $"~/usersfiles/{UserManager.GetUserId(@User)}/{file.FileName}";
+                        break;
+                    case ".jpg":
+                    case ".jpeg":
+                    case ".png":
+                    case ".gif":
+                        iconPath = @Url.Content($"~/usersfiles/{UserManager.GetUserId(@User)}/{file.FileName}");
+                        openPath = $"~/usersfiles/{UserManager.GetUserId(@User)}/{file.FileName}";
+                        break;
+                    case ".xls":
+                    case ".xlsx":
+                        iconPath = "/images/files/excel_icon.png";
+                        openPath = "";
+                        break;
+                    case ".txt":
+                    case ".docx":
+                    case ".doc":
+                        iconPath = "/images/files/docx.png";
+                        openPath = "";
+                        break;
+                    default:
+                        iconPath = "/images/files/default_icon.png";
+                        openPath = "";
+                        break;
+                }
+
+                <a href="@Url.Content(@openPath)" class="bg_file">
+                    <div class="bg_file_add">
+                        <img src="@iconPath" width="150px" height="150px" />
+                    </div>
+                    <p>@file.FileName</p>
+                </a>
+
+                fileCount++;
+
+                if (fileCount % 6 == 0 && fileCount != 0)
+                {
+                    @Html.Raw("</div><div class=\"el_line\">") <!-- Закрываем текущий и открываем новый el_line -->
+                }
             }
+
             <form id="uploadFileForm" enctype="multipart/form-data" method="post" asp-controller="Files" asp-action="CheckAndCreateUserFolder">
                 @Html.AntiForgeryToken()
                 <input type="file" name="file" id="fileInput" style="display:none;" />
@@ -55,4 +122,3 @@
         });
     </script>
 }
-
