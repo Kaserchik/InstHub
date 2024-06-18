@@ -83,10 +83,18 @@
                     </div>
                     <p>@file.FileName</p>
                 </a>
+                <div class="file_actions">
+                    <a asp-controller="Files" asp-action="Download" asp-route-fileName="@file.FileName" class="file_action" title="Загрузить">
+                        <img src="/images/files/download_icon.png" width="30px" height="30px" />
+                    </a>
+                    <a asp-controller="Files" asp-action="Delete" asp-route-fileName="@file.FileName" class="file_action" title="Удалить">
+                        <img src="/images/files/delete_icon.png" width="30px" height="30px" />
+                    </a>
+                </div>
 
                 fileCount++;
 
-                if (fileCount % 6 == 0 && fileCount != 0)
+                if (fileCount % 5 == 0 && fileCount != 0)
                 {
                     @Html.Raw("</div><div class=\"el_line\">") <!-- Закрываем текущий и открываем новый el_line -->
                 }

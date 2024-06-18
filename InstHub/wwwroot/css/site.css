@@ -44,7 +44,7 @@ body {
     height: 200px;
     background-color: rgb(217,217,217);
     margin-right: 10px;
-    margin-bottom: 40px;
+    margin-bottom: 80px;
     border-radius: 35px;
     color: black;
 }
@@ -62,4 +62,14 @@ body {
 
 .a_bt_add:hover {
     color: black;
+}
+
+.file_actions {
+    display: flex;
+    flex-direction: column;
+    margin-right: 10px;
+}
+
+.file_action {
+    margin-bottom: 20px; 
 }
