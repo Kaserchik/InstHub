@@ -1,4 +1,5 @@
 ﻿using InstHub.Data.Identity;
+using InstHub.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -11,5 +12,6 @@ namespace InstHub.Data
             : base(options)
         {
         }
+        public DbSet<Group> Groups { get; set; }
     }
 }

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using InstHub.Models;
+using Microsoft.AspNetCore.Identity;
 
 namespace InstHub.Data.Identity
 {

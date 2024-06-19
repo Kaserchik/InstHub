@@ -5,7 +5,6 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace InstHub.Controllers
 {
-    //[Authorize(Roles = "User")]
     public class FilesController : Controller
     {
         private readonly UserManager<AppIdentityUser> _userManager;
