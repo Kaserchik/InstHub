@@ -37,6 +37,12 @@
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Conferences" asp-action="UserConferences">Конференции</a>
                             </li>
+                            @if (@User.Identity?.Name! == "admin@test.com")
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Admins" asp-action="Admin">Администрация</a>
+                                </li>
+                            }
                         }
                     </ul>
                     <partial name="_LoginPartial" />

@@ -29,8 +29,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="wwwroot\groups\id1\files\" />
+    <Folder Include="wwwroot\groups\id2\files\" />
+    <Folder Include="wwwroot\groups\id3\files\" />
     <Folder Include="wwwroot\usersfiles\" />
-    <Folder Include="wwwroot\groups\" />
   </ItemGroup>
 
 </Project>

@@ -11,12 +11,30 @@
 
     <div class="groups_div">
         <div class="el_line">
-            <a asp-controller="Groups" asp-action="CreateGroupView" class="a_bt_add">
+            @* <a asp-controller="Groups" asp-action="GroupView" asp-route-groupName="Студенческий состав" asp-route-folderIds="id1" class="a_bt_add">
+                <div class="bg_file_add">
+                    <img src="/groups/id1/stud_list.png" class="file_ico_class" />
+                </div>
+                <p>Студенческий состав</p>
+            </a>
+            <a asp-controller="Groups" asp-action="GroupView" asp-route-groupName="Группа на проект" asp-route-folderIds="id2" class="a_bt_add">
+                <div class="bg_file_add">
+                    <img src="/groups/id2/project_group.png" class="file_ico_class" />
+                </div>
+                <p>Группа на проект</p>
+            </a> *@
+            <a asp-controller="Groups" asp-action="GroupView" asp-route-groupName="Новая группа" asp-route-folderIds="id3" class="a_bt_add">
+                <div class="bg_file_add">
+                    <img src="/groups/id3/new_group.png" class="file_ico_class" />
+                </div>
+                <p>Новая группа</p>
+            </a>
+            @* <a asp-controller="Groups" asp-action="CreateGroupView" class="a_bt_add">
                 <div class="bg_file_add">
                     <img src="/images/files/add_file.png" class="file_ico_class" />
                 </div>
                 <p>Создать группу</p>
-            </a>
+            </a> *@
         </div>
     </div>
 </div>
